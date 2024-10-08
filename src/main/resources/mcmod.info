@@ -5,7 +5,7 @@
   "description": "Addon for Just Enough Drags, adding support for more mods.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/Blue-Beaker/just-extra-drags-mc",
   "updateUrl": "",
   "authorList": ["Blue_Beaker"],
   "credits": "Creators of JustEnoughDrags, JustEnoughItems, and the mods this mod adds support for",
