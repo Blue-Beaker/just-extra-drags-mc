@@ -1,5 +1,5 @@
 ## Just Extra Drags
-An addon for [justenoughdrags](https://github.com/warmthdawn/justenoughdrags), which adds support for more mods.  
+An addon for [justenoughdrags](https://github.com/warmthdawn/justenoughdrags), and adds support for more mods.  
 It only have buildin support for BuildCraft Pipes for now,
 But it allows modpack maker to add custom slots on custom GUIs without the need to write codes.  
 
