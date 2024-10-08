@@ -1,16 +1,16 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "justextradrags",
+  "name": "Just Extra Drags",
+  "description": "Addon for Just Enough Drags, adding support for more mods.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["CleanroomMC"],
-  "credits": "Authors of this project",
+  "authorList": ["Blue_Beaker"],
+  "credits": "Creators of JustEnoughDrags, JustEnoughItems, and the mods this mod adds support for",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["justenoughdrags>=1.4-beta.1","jei>=4.24.7"]
 }
 ]

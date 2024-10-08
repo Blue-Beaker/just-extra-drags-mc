@@ -91,6 +91,7 @@ repositories {
             includeGroup 'curse.maven'
         }
     }
+    maven { url = "https://proxy-maven.covers1624.net/" }
     flatDir {
         dirs 'libs'
     }
@@ -106,8 +107,10 @@ dependencies {
     }
     implementation('org.luaj:luaj-jse:3.0.1')
     // Example of deobfuscating a dependency
-    // implementation rfg.deobf('curse.maven:had-enough-items-557549:4543375')
-
+    implementation rfg.deobf('curse.maven:had-enough-items-557549:4543375')
+    implementation rfg.deobf('curse.maven:just-enough-drags-454215:3549266')
+    implementation rfg.deobf('buildcraft:buildcraft-all:7.99.24.8')
+    
     if (project.use_mixins.toBoolean()) {
         // Change your mixin refmap name here:
         String mixin = modUtils.enableMixins('org.spongepowered:mixin:0.8.3', "mixins.${project.archives_base_name}.refmap.json")
