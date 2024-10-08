@@ -1,8 +1,5 @@
 package io.bluebeaker.justextradrags;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.LangKey;
