@@ -2,7 +2,7 @@ package io.bluebeaker.justextradrags;
 
 import com.warmthdawn.justenoughdrags.jei.GenericGhostHandler;
 
-import io.bluebeaker.justextradrags.compat.BCGhostHandler;
+import io.bluebeaker.justextradrags.compat.AltGhostHandler;
 import mezz.jei.api.IModRegistry;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
@@ -35,7 +35,7 @@ public class CustomEntries {
             }
             if(cancel) return;
             if(ignoreFit){
-                registry.addGhostIngredientHandler(container, new BCGhostHandler<>(slot));
+                registry.addGhostIngredientHandler(container, new AltGhostHandler<>(slot));
             }else{
                 registry.addGhostIngredientHandler(container, new GenericGhostHandler<>(slot));
             }

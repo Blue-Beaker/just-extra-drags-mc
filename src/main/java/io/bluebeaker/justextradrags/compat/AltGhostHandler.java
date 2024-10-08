@@ -6,9 +6,9 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class BCGhostHandler<T extends GuiContainer> extends GenericGhostHandler<T> {
+public class AltGhostHandler<T extends GuiContainer> extends GenericGhostHandler<T> {
 
-    public <I extends Slot> BCGhostHandler(Class<I> applySlot) {
+    public <I extends Slot> AltGhostHandler(Class<I> applySlot) {
         super(applySlot);
     }
 
