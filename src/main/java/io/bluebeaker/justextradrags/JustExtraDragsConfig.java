@@ -1,5 +1,8 @@
 package io.bluebeaker.justextradrags;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.LangKey;
@@ -14,4 +17,7 @@ public class JustExtraDragsConfig {
     @Comment("Enable support for Buildcraft Gates")
     @LangKey("config.justextradrags.compat.bcsilicon.name")
     public static boolean BCSilicon = true;
+    @Comment("Add support for Custom slots.\nFormat: container:slot[:true/false]\n Use debug to find the container and the slot.\nThird augment is whether to check the item 'fits' in the slot.")
+    @LangKey("config.justextradrags.custom.name")
+    public static String[] customEntries = new String[]{};
 }

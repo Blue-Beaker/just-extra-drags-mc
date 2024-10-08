@@ -22,5 +22,8 @@ public class JEIPlugin implements IModPlugin {
         }
         if (JustExtraDragsConfig.BCSilicon&&Loader.isModLoaded("buildcraftsilicon"))
         registry.addGhostIngredientHandler(GuiGate.class, new BCGhostHandler<GuiGate>(SlotPhantom.class));
+        if(JustExtraDragsConfig.customEntries.length>0){
+            CustomEntries.register(registry);
+        }
     }
 }
