@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber
+@EventBusSubscriber(Side.CLIENT)
 @SideOnly(Side.CLIENT)
 public class JEDDebug {
     public static JEDDebug INSTANCE = null;
