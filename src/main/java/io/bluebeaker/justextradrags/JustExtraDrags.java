@@ -19,9 +19,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod(modid = JustExtraDrags.MODID, name = JustExtraDrags.NAME, version = JustExtraDrags.VERSION)
 public class JustExtraDrags
 {
-    public static final String MODID = "justextradrags";
-    public static final String NAME = "JustExtraDrags";
-    public static final String VERSION = "1.0";
+    public static final String MODID = Tags.MOD_ID;
+    public static final String NAME = Tags.MOD_NAME;
+    public static final String VERSION = Tags.VERSION;
     private static JustExtraDrags INSTANCE = null;
     
     public MinecraftServer server;
