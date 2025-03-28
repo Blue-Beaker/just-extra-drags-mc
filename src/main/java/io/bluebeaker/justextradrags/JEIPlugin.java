@@ -8,12 +8,16 @@ import buildcraft.transport.gui.GuiEmzuliPipe_BC8;
 import io.bluebeaker.justextradrags.compat.AltGhostHandler;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin {
     @Override
     public void register(IModRegistry registry) {
+        // Do not access client-only GUIs on server
+        if(FMLCommonHandler.instance().getSide() == Side.SERVER) return;
         if (JustExtraDragsConfig.BCTransport&& Loader.isModLoaded("buildcrafttransport"))
         {
             registry.addGhostIngredientHandler(GuiDiamondPipe.class, new AltGhostHandler<GuiDiamondPipe>(SlotPhantom.class));

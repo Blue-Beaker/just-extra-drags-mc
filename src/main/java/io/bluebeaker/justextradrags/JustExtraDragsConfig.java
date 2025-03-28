@@ -14,7 +14,13 @@ public class JustExtraDragsConfig {
     @Comment("Enable support for Buildcraft Gates")
     @LangKey("config.justextradrags.compat.bcsilicon.name")
     public static boolean BCSilicon = true;
-    @Comment("Add support for Custom slots.\nFormat: container:slot[:true/false]\n Use debug to find the container and the slot.\nThird augment is whether to check the item 'fits' in the slot.")
+    @Comment({"Add support for Custom slots.",
+            "Format: container:slot[:true/false]",
+            "Use debug to find the container and the slot.",
+            "Third augment is whether to check the item 'fits' in the slot."})
     @LangKey("config.justextradrags.custom.name")
     public static String[] customEntries = new String[]{};
+
+    @Comment("Patch JustEnoughDrags so it won't crash on the dedicated server.")
+    public static boolean serverSidePatches = true;
 }

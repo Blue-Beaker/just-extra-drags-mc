@@ -11,19 +11,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber(Side.CLIENT)
 @SideOnly(Side.CLIENT)
-public class JEDDebug {
-    public static JEDDebug INSTANCE = null;
+public class JXDDebug {
+    public static JXDDebug INSTANCE = null;
     public static String lastContainerName = "";
 
-    public JEDDebug() {
+    public JXDDebug() {
         INSTANCE = this;
     }
 
-    public static JEDDebug getInstance() {
+    public static JXDDebug getInstance() {
         if (INSTANCE != null)
             return INSTANCE;
         else
-            return new JEDDebug();
+            return new JXDDebug();
     }
 
     @SubscribeEvent
