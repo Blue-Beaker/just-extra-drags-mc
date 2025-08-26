@@ -35,10 +35,19 @@ public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngr
         List<Target<I>> targets = new ArrayList<>();
         if (ingredient instanceof ItemStack) {
             ItemStack stack = ((ItemStack) ingredient).copy();
-            for (int i=0;i<gui.inventorySlots.inventorySlots.size();i++) {
-                Slot slot = gui.inventorySlots.inventorySlots.get(i);
-                if (isSlotValid(slot, stack, doStart, i)) {
-                    targets.add(createTarget(slot, gui));
+
+            if(!slotIDs.isEmpty()){
+                for (Integer slotID : slotIDs) {
+                    Slot slot = gui.inventorySlots.inventorySlots.get(slotID);
+                    if (isSlotValid(slot, stack)) {
+                        targets.add(createTarget(slot, gui));
+                    }
+                }
+            }else{
+                for (Slot slot : gui.inventorySlots.inventorySlots) {
+                    if (isSlotValid(slot, stack)) {
+                        targets.add(createTarget(slot, gui));
+                    }
                 }
             }
         }
@@ -63,8 +72,7 @@ public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngr
     }
 
     @SuppressWarnings(value = { "unchecked" })
-    public boolean isSlotValid(Slot slot, ItemStack stack, boolean doStart, int slotID) {
-        if(slotIDs.isEmpty() && !slotIDs.contains(slotID)) return false;
+    public boolean isSlotValid(Slot slot, ItemStack stack) {
         if(checkFit && !slot.isItemValid(stack)) return false;
         return this.applySlot.isAssignableFrom(slot.getClass());
     }

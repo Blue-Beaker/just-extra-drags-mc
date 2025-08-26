@@ -1,5 +1,6 @@
 package io.bluebeaker.justextradrags.network;
 
+import io.bluebeaker.justextradrags.JustExtraDrags;
 import io.bluebeaker.justextradrags.config.JXDConfigManager;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -50,6 +51,8 @@ public class PacketSetContainerSlot implements IMessage {
                         if(JXDConfigManager.isAllowedToPut(player.openContainer,slot)){
                             slot.putStack(message.stack);
                             slot.onSlotChanged();
+                        }else {
+                            JustExtraDrags.getLogger().info("Rejected a player's attempt to drag item {} to {} {}.",message.stack,player.openContainer,slot);
                         }
                     }
                 }

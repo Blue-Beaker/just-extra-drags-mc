@@ -14,17 +14,17 @@ import java.util.Set;
 public class ConfigEntry {
     @Nullable
     public final Class<?> clazzContainerGui;
-
+    @Nullable
     public final Class<? extends Container> clazzContainer;
     public final Class<? extends Slot> clazzSlot;
     public final boolean checkFit;
     public final Set<Integer> slotIDs;
 
-    public ConfigEntry(@Nullable Class<?> clazzContainerGui, @Nullable Class<? extends Container> clazzContainer, @Nullable Class<? extends Slot> clazzSlot, boolean checkFit){
+    public ConfigEntry(@Nullable Class<?> clazzContainerGui, @Nullable Class<? extends Container> clazzContainer, Class<? extends Slot> clazzSlot, boolean checkFit){
         this(clazzContainerGui,clazzContainer,clazzSlot, checkFit,new HashSet<>());
     }
 
-    public ConfigEntry(@Nullable Class<?> clazzContainerGui, @Nullable Class<? extends Container> clazzContainer, @Nullable Class<? extends Slot> clazzSlot, boolean checkFit, Set<Integer> slotIDs) {
+    public ConfigEntry(@Nullable Class<?> clazzContainerGui, @Nullable Class<? extends Container> clazzContainer, Class<? extends Slot> clazzSlot, boolean checkFit, Set<Integer> slotIDs) {
         this.clazzContainerGui = clazzContainerGui;
         this.clazzContainer = clazzContainer;
         this.clazzSlot = clazzSlot;
@@ -37,15 +37,12 @@ public class ConfigEntry {
         try {
             String[] splitted=configLine.split(":");
             if(splitted.length<3) return null;
-            boolean ignoreFit = false;
-            if(splitted.length>=4){
-                ignoreFit=Boolean.parseBoolean(splitted[3]);
-            }
-            Set<Integer> slotIDs = new HashSet<>();
-            if(splitted.length>=5){
-                slotIDs.addAll(Utils.getIntsFromCommaSeparatedString(splitted[4]));
-            }
             Class clazzGui = null;
+
+            int indexParamIgnoreFit = 3;
+
+            Class<? extends Container> containerClass = null;
+            Class<? extends Slot> slotClass = null;
             // Only try to load GUI class on client
             if(FMLCommonHandler.instance().getSide()== Side.CLIENT){
                 try {
@@ -54,28 +51,58 @@ public class ConfigEntry {
                     JustExtraDrags.getLogger().error("Container GUI class '{}' not found",splitted[0]);
                 }
             }
-            Class clazzContainer;
+            Class param1;
             try {
-                clazzContainer = Class.forName(splitted[1]);
+                param1 = Class.forName(splitted[1]);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException("Container class '"+splitted[1]+"' not found");
             }
-            Class clazzSlot;
-            try {
-                clazzSlot = Class.forName(splitted[2]);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException("Slot class '"+splitted[2]+"' not found");
+
+            if(!Container.class.isAssignableFrom(param1)){
+                if(Slot.class.isAssignableFrom(param1)){
+                    indexParamIgnoreFit=indexParamIgnoreFit-1;
+                    slotClass=param1;
+                    JustExtraDrags.getLogger().warn("Old config entry detected: \n{}\n This will work but server-side anticheat check will be disabled.",configLine);
+                }else {
+                    throw new RuntimeException("Container class '"+splitted[1]+"' isn't applicable");
+                }
+            }else {
+                containerClass=param1;
             }
-            if(!Container.class.isAssignableFrom(clazzContainer)){
-                throw new RuntimeException("Container class '"+splitted[1]+"' isn't applicable");
+
+            if(slotClass==null){
+                Class param2;
+                try {
+                    param2 = Class.forName(splitted[2]);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException("Slot class '"+splitted[2]+"' not found");
+                }
+
+                if(!Slot.class.isAssignableFrom(param2)){
+                    throw new RuntimeException("Slot class '"+splitted[2]+"' isn't applicable");
+                }else {
+                    slotClass=param2;
+                }
             }
-            if(!Slot.class.isAssignableFrom(clazzSlot)){
-                throw new RuntimeException("Slot class '"+splitted[2]+"' isn't applicable");
+
+            boolean ignoreFit = false;
+            if(splitted.length>indexParamIgnoreFit){
+                ignoreFit=Boolean.parseBoolean(splitted[indexParamIgnoreFit]);
             }
-            return new ConfigEntry(clazzGui,clazzContainer,clazzSlot,ignoreFit,slotIDs);
+            Set<Integer> slotIDs = new HashSet<>();
+            if(splitted.length>indexParamIgnoreFit+1){
+                slotIDs.addAll(Utils.getIntsFromCommaSeparatedString(splitted[indexParamIgnoreFit+1]));
+            }
+
+            return new ConfigEntry(clazzGui,containerClass,slotClass,ignoreFit,slotIDs);
         }catch (RuntimeException e){
             JustExtraDrags.getLogger().error("Error when loading config line {} : {}",configLine,e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public String toString(){
+        return this.getClass().getName()+";"+this.clazzContainerGui+":"+this.clazzContainer+":"+this.clazzSlot+":"+this.checkFit+":"+this.slotIDs;
     }
 }
