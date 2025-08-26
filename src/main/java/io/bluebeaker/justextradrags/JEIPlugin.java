@@ -20,12 +20,13 @@ public class JEIPlugin implements IModPlugin {
         if(FMLCommonHandler.instance().getSide() == Side.SERVER) return;
         if (JustExtraDragsConfig.BCTransport&& Loader.isModLoaded("buildcrafttransport"))
         {
-            registry.addGhostIngredientHandler(GuiDiamondPipe.class, new AltGhostHandler<GuiDiamondPipe>(SlotPhantom.class));
-            registry.addGhostIngredientHandler(GuiDiamondWoodPipe.class, new AltGhostHandler<GuiDiamondWoodPipe>(SlotPhantom.class));
-            registry.addGhostIngredientHandler(GuiEmzuliPipe_BC8.class, new AltGhostHandler<GuiEmzuliPipe_BC8>(SlotPhantom.class));
+            registry.addGhostIngredientHandler(GuiDiamondPipe.class, new AltGhostHandler<GuiDiamondPipe>(SlotPhantom.class,false));
+            registry.addGhostIngredientHandler(GuiDiamondWoodPipe.class, new AltGhostHandler<GuiDiamondWoodPipe>(SlotPhantom.class,false));
+            registry.addGhostIngredientHandler(GuiEmzuliPipe_BC8.class, new AltGhostHandler<GuiEmzuliPipe_BC8>(SlotPhantom.class,false));
         }
-        if (JustExtraDragsConfig.BCSilicon&&Loader.isModLoaded("buildcraftsilicon"))
-        registry.addGhostIngredientHandler(GuiGate.class, new AltGhostHandler<GuiGate>(SlotPhantom.class));
+        if (JustExtraDragsConfig.BCSilicon&&Loader.isModLoaded("buildcraftsilicon")) {
+            registry.addGhostIngredientHandler(GuiGate.class, new AltGhostHandler<GuiGate>(SlotPhantom.class,false));
+        }
         if(JustExtraDragsConfig.customEntries.length>0){
             CustomEntries.register(registry);
         }

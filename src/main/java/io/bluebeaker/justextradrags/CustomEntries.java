@@ -7,6 +7,8 @@ import mezz.jei.api.IModRegistry;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
 
+import java.util.List;
+
 public class CustomEntries {
     
     public static void register(IModRegistry registry) {
@@ -34,11 +36,17 @@ public class CustomEntries {
                 cancel=true;
             }
             if(cancel) return;
-            if(ignoreFit){
-                registry.addGhostIngredientHandler(container, new AltGhostHandler<>(slot));
-            }else{
-                registry.addGhostIngredientHandler(container, new GenericGhostHandler<>(slot));
+
+            //noinspection unchecked
+            AltGhostHandler<GuiContainer> handler = new AltGhostHandler<GuiContainer>(slot, ignoreFit);
+            // If 4th param is present, limit the slot index
+            if(splitted.length>=4){
+                handler.setSlotIDs(Utils.getIntsFromCommaSeparatedString(splitted[3]));
             }
+
+            //noinspection unchecked
+            registry.addGhostIngredientHandler(container, handler);
+            JustExtraDrags.getLogger().info("Adding handler {} -> {}:",container.getName(),handler.toString());
         } catch (ClassNotFoundException e) {
             JustExtraDrags.getLogger().warn("Class not found: "+e.getStackTrace().toString());
         }
