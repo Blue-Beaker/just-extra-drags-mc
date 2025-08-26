@@ -85,16 +85,16 @@ public class ConfigEntry {
                 }
             }
 
-            boolean ignoreFit = false;
+            boolean checkFit = true;
             if(splitted.length>indexParamIgnoreFit){
-                ignoreFit=Boolean.parseBoolean(splitted[indexParamIgnoreFit]);
+                checkFit=Boolean.parseBoolean(splitted[indexParamIgnoreFit]);
             }
             Set<Integer> slotIDs = new HashSet<>();
             if(splitted.length>indexParamIgnoreFit+1){
                 slotIDs.addAll(Utils.getIntsFromCommaSeparatedString(splitted[indexParamIgnoreFit+1]));
             }
 
-            return new ConfigEntry(clazzGui,containerClass,slotClass,ignoreFit,slotIDs);
+            return new ConfigEntry(clazzGui,containerClass,slotClass,checkFit,slotIDs);
         }catch (RuntimeException e){
             JustExtraDrags.getLogger().error("Error when loading config line {} : {}",configLine,e.getMessage());
             return null;

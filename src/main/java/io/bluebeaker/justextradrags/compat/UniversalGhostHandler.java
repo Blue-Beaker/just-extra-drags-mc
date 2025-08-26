@@ -38,6 +38,7 @@ public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngr
 
             if(!slotIDs.isEmpty()){
                 for (Integer slotID : slotIDs) {
+                    if(slotID>=gui.inventorySlots.inventorySlots.size()) continue;
                     Slot slot = gui.inventorySlots.inventorySlots.get(slotID);
                     if (isSlotValid(slot, stack)) {
                         targets.add(createTarget(slot, gui));
