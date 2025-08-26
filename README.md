@@ -34,3 +34,5 @@ mods.railcraft.client.gui.GuiDispenserTrain:mods.railcraft.common.gui.slots.Slot
 forestry.factory.gui.GuiCarpenter:forestry.core.gui.slots.SlotCraftMatrix
 forestry.worktable.gui.GuiWorktable:forestry.core.gui.slots.SlotCraftMatrix
 ```
+### License
+Most of this project is licensed under MIT, but a small portion of code is taken from [JustEnoughDrags by warmthdawn](https://github.com/warmthdawn/justenoughdrags) with Apache 2.0 and modified for this mod.  

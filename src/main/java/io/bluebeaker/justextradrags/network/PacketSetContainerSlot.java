@@ -48,6 +48,8 @@ public class PacketSetContainerSlot implements IMessage {
                 if (player.openContainer != null) {
                     if (message.containerSlot >= 0 && message.containerSlot < player.openContainer.inventorySlots.size()) {
                         Slot slot = player.openContainer.getSlot(message.containerSlot);
+
+                        //Modified: Check whether the slot is allowed to put
                         if(JXDConfigManager.isAllowedToPut(player.openContainer,slot)){
                             slot.putStack(message.stack);
                             slot.onSlotChanged();

@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-// Original logic taken from JustEnoughDrags with Apache2.0 license
+//Taken from JustEnoughDrags with Apache2.0 license
 public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngredientHandler<T> {
 
     protected final Class applySlot;
@@ -26,7 +26,6 @@ public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngr
         this.checkFit=checkFit;
     }
 
-
     @Override
     public <I> List<Target<I>> getTargets(T gui, I ingredient, boolean doStart) {
         if(!ServerChecker.isAvailableOnServer()) {
@@ -35,7 +34,7 @@ public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngr
         List<Target<I>> targets = new ArrayList<>();
         if (ingredient instanceof ItemStack) {
             ItemStack stack = ((ItemStack) ingredient).copy();
-
+            // Modified: Add slotID check
             if(!slotIDs.isEmpty()){
                 for (Integer slotID : slotIDs) {
                     if(slotID>=gui.inventorySlots.inventorySlots.size()) continue;
@@ -44,6 +43,7 @@ public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngr
                         targets.add(createTarget(slot, gui));
                     }
                 }
+            //Or original if slotID is not defined
             }else{
                 for (Slot slot : gui.inventorySlots.inventorySlots) {
                     if (isSlotValid(slot, stack)) {
@@ -55,7 +55,7 @@ public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngr
         lastContainer = gui.inventorySlots;
         return targets;
     }
-
+    //Following are original
     public <I> Target<I> createTarget(Slot slot, T gui) {
         return new GhostTarget<I>(slot, gui.getGuiLeft(), gui.getGuiTop());
     }
