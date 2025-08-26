@@ -2,18 +2,23 @@ package io.bluebeaker.justextradrags;
 
 import java.util.HashMap;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.client.event.GuiContainerEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Mouse;
 
 @EventBusSubscriber(Side.CLIENT)
 @SideOnly(Side.CLIENT)
 public class JXDDebug {
     public static JXDDebug INSTANCE = null;
-    public static String lastContainerName = "";
+
+    private static GuiContainer lastContainer = null;
+
+    private static boolean isMousePressed = false;
 
     public JXDDebug() {
         INSTANCE = this;
@@ -30,11 +35,21 @@ public class JXDDebug {
     public static void onGuiEvent(GuiContainerEvent.DrawForeground event) {
         if (!JustExtraDragsConfig.debug)
             return;
-        String containerName = event.getGuiContainer().getClass().getName();
-        if (containerName == lastContainerName)
+        GuiContainer container = event.getGuiContainer();
+
+        if(Mouse.isButtonDown(0) && !isMousePressed){
+            Slot slot = event.getGuiContainer().getSlotUnderMouse();
+            if(slot!=null){
+                JustExtraDrags.getLogger().info("Clicked slot: {}, ID: {}",slot.getClass().getName(),slot.getSlotIndex());
+            }
+        }
+        isMousePressed=Mouse.isButtonDown(0);
+
+        if (container == lastContainer)
             return;
-        lastContainerName = containerName;
-        JustExtraDrags.getLogger().info("Opened Container: " + containerName);
+        lastContainer = container;
+        JustExtraDrags.getLogger().info("Opened Container: " + container.getClass().getName());
+
         HashMap<String, Integer> slots = new HashMap<String, Integer>();
         for (Slot slot : event.getGuiContainer().inventorySlots.inventorySlots) {
             String name = slot.getClass().getName();
@@ -45,5 +60,6 @@ public class JXDDebug {
         for (String name : slots.keySet()) {
             JustExtraDrags.getLogger().info(name + " x " + slots.get(name));
         }
+
     }
 }
