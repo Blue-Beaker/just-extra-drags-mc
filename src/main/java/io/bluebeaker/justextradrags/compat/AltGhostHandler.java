@@ -1,7 +1,5 @@
 package io.bluebeaker.justextradrags.compat;
 
-import com.warmthdawn.justenoughdrags.jei.GenericGhostHandler;
-
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -9,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class AltGhostHandler<T extends GuiContainer> extends GenericGhostHandler<T> {

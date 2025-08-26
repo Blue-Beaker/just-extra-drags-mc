@@ -1,8 +1,12 @@
 package io.bluebeaker.justextradrags;
 
+import io.bluebeaker.justextradrags.compat.BCCompat;
+import io.bluebeaker.justextradrags.config.JXDConfigManager;
+import io.bluebeaker.justextradrags.network.NetworkHandler;
+import net.minecraftforge.fml.common.network.NetworkCheckHandler;
+import net.minecraftforge.fml.common.versioning.ComparableVersion;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
-
-import com.warmthdawn.justenoughdrags.network.NetworkHandler;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,7 +20,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod(modid = JustExtraDrags.MODID, name = JustExtraDrags.NAME, version = JustExtraDrags.VERSION)
+import java.util.Map;
+
+@Mod(modid = JustExtraDrags.MODID, name = JustExtraDrags.NAME, version = JustExtraDrags.VERSION,acceptableRemoteVersions = "*")
 public class JustExtraDrags
 {
     public static final String MODID = Tags.MOD_ID;
@@ -45,8 +51,12 @@ public class JustExtraDrags
     public void onServerStart(FMLServerStartingEvent event){
         this.server=event.getServer();
     }
+
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        BCCompat.addBuildcraftCompat();
+        JXDConfigManager.updateEntriesFromConfig();
+
         NetworkHandler.registerMessages(MODID);
     }
 
@@ -57,7 +67,15 @@ public class JustExtraDrags
         }
     }
 
-    
+    @NetworkCheckHandler
+    public boolean checkModLists(Map<String, String> modList, Side side) {
+        if (side == Side.SERVER) {
+            ComparableVersion remoteVersion = new ComparableVersion(modList.getOrDefault(MODID,"0.0.0"));
+            ServerChecker.onConnected(remoteVersion.compareTo(new ComparableVersion("1.1.0"))>=0);
+        }
+        return true;
+    }
+
     public static Logger getLogger(){
         return logger;
     }

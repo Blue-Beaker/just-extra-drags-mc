@@ -15,7 +15,7 @@ public class JustExtraDragsConfig {
     @LangKey("config.justextradrags.compat.bcsilicon.name")
     public static boolean BCSilicon = true;
     @Comment({"Add support for Custom slots.",
-            "Format: container:slot[:true/false]",
+            "Format: containerGUI:container:slot[:true/false]",
             "Use debug to find the container and the slot.",
             "Third augment is whether to check the item 'fits' in the slot."})
     @LangKey("config.justextradrags.custom.name")

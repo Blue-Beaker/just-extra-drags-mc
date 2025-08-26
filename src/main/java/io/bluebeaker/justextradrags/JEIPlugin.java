@@ -1,34 +1,43 @@
 package io.bluebeaker.justextradrags;
 
-import buildcraft.lib.gui.slot.SlotPhantom;
-import buildcraft.silicon.gui.GuiGate;
-import buildcraft.transport.gui.GuiDiamondPipe;
-import buildcraft.transport.gui.GuiDiamondWoodPipe;
-import buildcraft.transport.gui.GuiEmzuliPipe_BC8;
 import io.bluebeaker.justextradrags.compat.AltGhostHandler;
+import io.bluebeaker.justextradrags.config.ConfigEntry;
+import io.bluebeaker.justextradrags.config.JXDConfigManager;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin {
+
     @Override
     public void register(IModRegistry registry) {
         // Do not access client-only GUIs on server
         if(FMLCommonHandler.instance().getSide() == Side.SERVER) return;
-        if (JustExtraDragsConfig.BCTransport&& Loader.isModLoaded("buildcrafttransport"))
-        {
-            registry.addGhostIngredientHandler(GuiDiamondPipe.class, new AltGhostHandler<GuiDiamondPipe>(SlotPhantom.class,false));
-            registry.addGhostIngredientHandler(GuiDiamondWoodPipe.class, new AltGhostHandler<GuiDiamondWoodPipe>(SlotPhantom.class,false));
-            registry.addGhostIngredientHandler(GuiEmzuliPipe_BC8.class, new AltGhostHandler<GuiEmzuliPipe_BC8>(SlotPhantom.class,false));
-        }
-        if (JustExtraDragsConfig.BCSilicon&&Loader.isModLoaded("buildcraftsilicon")) {
-            registry.addGhostIngredientHandler(GuiGate.class, new AltGhostHandler<GuiGate>(SlotPhantom.class,false));
-        }
         if(JustExtraDragsConfig.customEntries.length>0){
-            CustomEntries.register(registry);
+            for (ConfigEntry entry : JXDConfigManager.getAllEntries()) {
+                registerEntry(entry, registry);
+            }
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static void registerEntry(ConfigEntry entry,IModRegistry registry){
+
+        if(entry.clazzContainerGui==null || !GuiContainer.class.isAssignableFrom(entry.clazzContainerGui)){
+            return;
+        }
+
+        Class guiContainer = entry.clazzContainerGui;
+
+        AltGhostHandler<GuiContainer> handler = new AltGhostHandler<>(entry.clazzSlot, entry.ignoreFit);
+
+        registry.addGhostIngredientHandler(guiContainer, handler);
+        handler.setSlotIDs(entry.slotIDs);
+
+        JustExtraDrags.getLogger().info("Adding handler {} -> {}:",guiContainer.getName(),handler.toString());
     }
 }

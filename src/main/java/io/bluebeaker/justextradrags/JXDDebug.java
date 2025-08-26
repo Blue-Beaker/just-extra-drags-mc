@@ -1,7 +1,5 @@
 package io.bluebeaker.justextradrags;
 
-import java.util.HashMap;
-
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.client.event.GuiContainerEvent;
@@ -10,6 +8,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Mouse;
+
+import java.util.HashMap;
 
 @EventBusSubscriber(Side.CLIENT)
 @SideOnly(Side.CLIENT)
@@ -48,7 +48,7 @@ public class JXDDebug {
         if (container == lastContainer)
             return;
         lastContainer = container;
-        JustExtraDrags.getLogger().info("Opened Container: " + container.getClass().getName());
+        JustExtraDrags.getLogger().info("Opened Container: {} , {}",container.getClass().getName(),container.inventorySlots.getClass().getName());
 
         HashMap<String, Integer> slots = new HashMap<String, Integer>();
         for (Slot slot : event.getGuiContainer().inventorySlots.inventorySlots) {
