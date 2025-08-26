@@ -1,6 +1,6 @@
 package io.bluebeaker.justextradrags;
 
-import io.bluebeaker.justextradrags.compat.AltGhostHandler;
+import io.bluebeaker.justextradrags.compat.UniversalGhostHandler;
 import io.bluebeaker.justextradrags.config.ConfigEntry;
 import io.bluebeaker.justextradrags.config.JXDConfigManager;
 import mezz.jei.api.IModPlugin;
@@ -31,7 +31,7 @@ public class JEIPlugin implements IModPlugin {
 
         Class guiContainer = entry.clazzContainerGui;
 
-        AltGhostHandler<GuiContainer> handler = new AltGhostHandler<>(entry.clazzSlot, entry.checkFit);
+        UniversalGhostHandler<GuiContainer> handler = new UniversalGhostHandler<>(entry.clazzSlot, entry.checkFit);
 
         registry.addGhostIngredientHandler(guiContainer, handler);
         handler.setSlotIDs(entry.slotIDs);

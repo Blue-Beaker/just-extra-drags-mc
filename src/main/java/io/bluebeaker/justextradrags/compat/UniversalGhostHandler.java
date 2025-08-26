@@ -10,18 +10,20 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
-// Taken from JustEnoughDrags with Apache2.0 license
-public class GenericGhostHandler<T extends GuiContainer> implements IGhostIngredientHandler<T> {
+// Original logic taken from JustEnoughDrags with Apache2.0 license
+public class UniversalGhostHandler<T extends GuiContainer> implements IGhostIngredientHandler<T> {
 
     protected final Class applySlot;
     protected Container lastContainer;
+    protected boolean checkFit = true;
+    protected Set<Integer> slotIDs = new HashSet<>();
 
-    public <I extends Slot> GenericGhostHandler(Class<I> applySlot) {
+    public <I extends Slot> UniversalGhostHandler(Class<I> applySlot, boolean checkFit) {
         this.applySlot = applySlot;
+        this.checkFit=checkFit;
     }
 
 
@@ -48,9 +50,9 @@ public class GenericGhostHandler<T extends GuiContainer> implements IGhostIngred
         return new GhostTarget<I>(slot, gui.getGuiLeft(), gui.getGuiTop());
     }
 
-    @SuppressWarnings("unchecked")
-    public boolean isSlotValid(Slot slot, ItemStack stack, boolean doStart, int slotID) {
-        return applySlot.isAssignableFrom(slot.getClass()) && slot.isItemValid(stack);
+    public void setSlotIDs(Collection<Integer> slotIDs){
+        this.slotIDs.clear();
+        this.slotIDs.addAll(slotIDs);
     }
 
     @Override
@@ -58,6 +60,13 @@ public class GenericGhostHandler<T extends GuiContainer> implements IGhostIngred
         if (lastContainer != null) {
             lastContainer.detectAndSendChanges();
         }
+    }
+
+    @SuppressWarnings(value = { "unchecked" })
+    public boolean isSlotValid(Slot slot, ItemStack stack, boolean doStart, int slotID) {
+        if(slotIDs.isEmpty() && !slotIDs.contains(slotID)) return false;
+        if(checkFit && !slot.isItemValid(stack)) return false;
+        return this.applySlot.isAssignableFrom(slot.getClass());
     }
 
     protected static class GhostTarget<I> implements Target<I> {
