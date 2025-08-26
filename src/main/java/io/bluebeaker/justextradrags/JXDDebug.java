@@ -40,7 +40,9 @@ public class JXDDebug {
         if(Mouse.isButtonDown(0) && !isMousePressed){
             Slot slot = event.getGuiContainer().getSlotUnderMouse();
             if(slot!=null){
-                JustExtraDrags.getLogger().info("Clicked slot: {}, ID: {}",slot.getClass().getName(),slot.getSlotIndex());
+                int slotID = container.inventorySlots.inventorySlots.indexOf(slot);
+                JustExtraDrags.getLogger().info("Clicked slot: {}, ID: {}",slot.getClass().getName(),slotID);
+                JustExtraDrags.getLogger().info("Config entry: '{}:{}:{}'",container.getClass().getName(),container.inventorySlots.getClass().getName(),slot.getClass().getName());
             }
         }
         isMousePressed=Mouse.isButtonDown(0);

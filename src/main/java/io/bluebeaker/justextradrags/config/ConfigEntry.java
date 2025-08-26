@@ -17,18 +17,18 @@ public class ConfigEntry {
 
     public final Class<? extends Container> clazzContainer;
     public final Class<? extends Slot> clazzSlot;
-    public final boolean ignoreFit;
+    public final boolean checkFit;
     public final Set<Integer> slotIDs;
 
-    public ConfigEntry(@Nullable Class<?> clazzContainerGui, @Nullable Class<? extends Container> clazzContainer, @Nullable Class<? extends Slot> clazzSlot, boolean ignoreFit){
-        this(clazzContainerGui,clazzContainer,clazzSlot,ignoreFit,new HashSet<>());
+    public ConfigEntry(@Nullable Class<?> clazzContainerGui, @Nullable Class<? extends Container> clazzContainer, @Nullable Class<? extends Slot> clazzSlot, boolean checkFit){
+        this(clazzContainerGui,clazzContainer,clazzSlot, checkFit,new HashSet<>());
     }
 
-    public ConfigEntry(@Nullable Class<?> clazzContainerGui, @Nullable Class<? extends Container> clazzContainer, @Nullable Class<? extends Slot> clazzSlot, boolean ignoreFit, Set<Integer> slotIDs) {
+    public ConfigEntry(@Nullable Class<?> clazzContainerGui, @Nullable Class<? extends Container> clazzContainer, @Nullable Class<? extends Slot> clazzSlot, boolean checkFit, Set<Integer> slotIDs) {
         this.clazzContainerGui = clazzContainerGui;
         this.clazzContainer = clazzContainer;
         this.clazzSlot = clazzSlot;
-        this.ignoreFit=ignoreFit;
+        this.checkFit = checkFit;
         this.slotIDs = slotIDs;
     }
 

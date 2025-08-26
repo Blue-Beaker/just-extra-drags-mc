@@ -17,10 +17,8 @@ public class JEIPlugin implements IModPlugin {
     public void register(IModRegistry registry) {
         // Do not access client-only GUIs on server
         if(FMLCommonHandler.instance().getSide() == Side.SERVER) return;
-        if(JustExtraDragsConfig.customEntries.length>0){
-            for (ConfigEntry entry : JXDConfigManager.getAllEntries()) {
-                registerEntry(entry, registry);
-            }
+        for (ConfigEntry entry : JXDConfigManager.getAllEntries()) {
+            registerEntry(entry, registry);
         }
     }
 
@@ -33,7 +31,7 @@ public class JEIPlugin implements IModPlugin {
 
         Class guiContainer = entry.clazzContainerGui;
 
-        AltGhostHandler<GuiContainer> handler = new AltGhostHandler<>(entry.clazzSlot, entry.ignoreFit);
+        AltGhostHandler<GuiContainer> handler = new AltGhostHandler<>(entry.clazzSlot, entry.checkFit);
 
         registry.addGhostIngredientHandler(guiContainer, handler);
         handler.setSlotIDs(entry.slotIDs);

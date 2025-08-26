@@ -33,9 +33,9 @@ public class GenericGhostHandler<T extends GuiContainer> implements IGhostIngred
         List<Target<I>> targets = new ArrayList<>();
         if (ingredient instanceof ItemStack) {
             ItemStack stack = ((ItemStack) ingredient).copy();
-            for (Slot slot : gui.inventorySlots.inventorySlots) {
-                if(slot.inventory!=gui.inventorySlots) continue;
-                if (isSlotValid(slot, stack, doStart)) {
+            for (int i=0;i<gui.inventorySlots.inventorySlots.size();i++) {
+                Slot slot = gui.inventorySlots.inventorySlots.get(i);
+                if (isSlotValid(slot, stack, doStart, i)) {
                     targets.add(createTarget(slot, gui));
                 }
             }
@@ -49,7 +49,7 @@ public class GenericGhostHandler<T extends GuiContainer> implements IGhostIngred
     }
 
     @SuppressWarnings("unchecked")
-    public boolean isSlotValid(Slot slot, ItemStack stack, boolean doStart) {
+    public boolean isSlotValid(Slot slot, ItemStack stack, boolean doStart, int slotID) {
         return applySlot.isAssignableFrom(slot.getClass()) && slot.isItemValid(stack);
     }
 
