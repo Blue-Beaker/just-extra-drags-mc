@@ -1,38 +1,28 @@
 ## Just Extra Drags
-An addon for [justenoughdrags](https://github.com/warmthdawn/justenoughdrags), and adds support for more mods.  
-It only have buildin support for BuildCraft Pipes for now,
-But it allows modpack maker to add custom slots on custom GUIs without the need to write codes.  
+Adds JEI dragging support for more mods, that haven't been supported by [JustEnoughDrags](https://github.com/warmthdawn/justenoughdrags).  
+It have buildin support for BuildCraft Pipes and Gates for now,
+But allows modpack maker to add custom slots on custom GUIs without the need to write codes.  
 
 Also patches JustEnoughDrags so it won't crash on the dedicated server.  
 
 ### Custom entries
-Format is `ContainerClass:SlotClass` or `ContainerClass:SlotClass:true/false`.
-Try to set the third augment `true` if the drag isn't working. It makes the slot ignore which items can be put into it.
+The format is  
 ```
-    S:customEntries <
-        net.minecraft.client.gui.inventory.GuiChest:net.minecraft.inventory.Slot:true
-     >
+a.b.c.GuiThing:a.b.c.ContainerThing:a.b.c.SlotThing:true:0,2,10-13
 ```
+From 1.1.0 server-side check is implemented, the old format is still usable but any line of old config will disable the serverside checking.  
+(Old Config Format)  
+```
+a.b.c.GuiThing:a.b.c.SlotThing:true:0,2,10-13
+```
+Try to set the 4th augment `true` if the drag isn't working. It makes the slot ignore which items can be put into it.  
+5th augment accepts a comma-separated slot IDs allowed to drag to, such as '5,10-13'.  
+Turn on 'Debug' in mod config to get the required classpath in logs. a generated config line is also printed.  
 
 ### Examples
-```
-# BuildCraft AutoCrafter
-buildcraft.factory.gui.GuiAutoCraftItems:buildcraft.lib.gui.slot.SlotPhantom:true
-buildcraft.silicon.gui.GuiAdvancedCraftingTable:buildcraft.lib.gui.slot.SlotPhantom:true
-
-# Railcraft cart, item and fluid Filters
-mods.railcraft.client.gui.GuiCartTank:mods.railcraft.common.gui.slots.SlotFluidFilter
-mods.railcraft.client.gui.GuiCartCargo:mods.railcraft.common.gui.slots.SlotStackFilter
-mods.railcraft.client.gui.GuiManipulatorCartItem:mods.railcraft.common.gui.slots.SlotMinecartPhantom
-mods.railcraft.client.gui.GuiManipulatorCartItem:mods.railcraft.common.gui.slots.SlotRailcraft
-mods.railcraft.client.gui.GuiManipulatorCartFluid:mods.railcraft.common.gui.slots.SlotRailcraft
-mods.railcraft.client.gui.GuiManipulatorCartFluid:mods.railcraft.common.gui.slots.SlotFluidFilter
-mods.railcraft.client.gui.GuiManipulatorCartFluid:mods.railcraft.common.gui.slots.SlotMinecartPhantom
-mods.railcraft.client.gui.GuiDispenserTrain:mods.railcraft.common.gui.slots.SlotDispensableCart
-
-# Forestry carpenter and worktable recipes
-forestry.factory.gui.GuiCarpenter:forestry.core.gui.slots.SlotCraftMatrix
-forestry.worktable.gui.GuiWorktable:forestry.core.gui.slots.SlotCraftMatrix
-```
+See [This](ConfigExamples.md).
 ### License
-Most of this project is licensed under MIT, but a small portion of code is taken from [JustEnoughDrags by warmthdawn](https://github.com/warmthdawn/justenoughdrags) with Apache 2.0 and modified for this mod.  
+Most of this project is licensed under MIT, but a small portion of code is taken from [JustEnoughDrags by warmthdawn](https://github.com/warmthdawn/justenoughdrags) with [Apache 2.0 License](LICENSE_JustEnoughDrags) and modified for this mod:
+- [UniversalGhostHandler.java](src/main/java/io/bluebeaker/justextradrags/compat/UniversalGhostHandler.java)
+- [NetworkHandler.java](src/main/java/io/bluebeaker/justextradrags/network/NetworkHandler.java)
+- [PacketSetContainerSlot.java](src/main/java/io/bluebeaker/justextradrags/network/PacketSetContainerSlot.java)
