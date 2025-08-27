@@ -1,2 +1,3 @@
 config.justextradrags.compat.bctransport.name=Buildcraft Transport
 config.justextradrags.compat.bcsilicon.name=Buildcraft Silicon
+config.justextradrags.debug.name=Debug
