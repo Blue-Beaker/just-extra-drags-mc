@@ -33,10 +33,10 @@ public class ConfigEntry {
     }
 
     @Nullable
-    public static ConfigEntry getFromConfigLine(String configLine){
+    public static ConfigEntry getFromConfigLine(String rawConfigLine){
         try {
             // Allow comments in config line
-            configLine=configLine.split("#")[0];
+            String configLine=rawConfigLine.split("#")[0];
             if(configLine.isEmpty()) return null;
 
             String[] splitted=configLine.split(":");
@@ -66,7 +66,7 @@ public class ConfigEntry {
                 if(Slot.class.isAssignableFrom(param1)){
                     indexParamIgnoreFit=indexParamIgnoreFit-1;
                     slotClass=param1;
-                    JustExtraDrags.getLogger().warn("Old config entry detected: \n{}\n This will work but server-side anticheat check will be disabled.",configLine);
+                    JustExtraDrags.getLogger().warn("Old config entry detected: \n{}\n This will work but server-side anticheat check will be disabled.",rawConfigLine);
                 }else {
                     throw new RuntimeException("Container class '"+splitted[1]+"' isn't applicable");
                 }
@@ -100,7 +100,7 @@ public class ConfigEntry {
 
             return new ConfigEntry(clazzGui,containerClass,slotClass,!ignoreFit,slotIDs);
         }catch (RuntimeException e){
-            JustExtraDrags.getLogger().error("Error when loading config line {} : {}",configLine,e.getMessage());
+            JustExtraDrags.getLogger().error("Error when loading config line {} : {}",rawConfigLine,e.getMessage());
             return null;
         }
     }
