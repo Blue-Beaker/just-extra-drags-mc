@@ -1,6 +1,7 @@
 package io.bluebeaker.justextradrags;
 
 import io.bluebeaker.justextradrags.client.GhostHandlerMulti;
+import io.bluebeaker.justextradrags.compat.BCCompat;
 import io.bluebeaker.justextradrags.compat.UniversalGhostHandler;
 import io.bluebeaker.justextradrags.config.ConfigEntry;
 import io.bluebeaker.justextradrags.config.JXDConfigManager;
@@ -24,6 +25,7 @@ public class JEIPlugin implements IModPlugin {
         for (ConfigEntry entry : JXDConfigManager.getAllEntries()) {
             registerEntry(entry, registry);
         }
+        BCCompat.registerToJEI(registry);
     }
 
     @SideOnly(Side.CLIENT)
