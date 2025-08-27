@@ -1,4 +1,7 @@
 ## Just Extra Drags
+
+#### From 1.1.0 the config format is updated. The old config format can still be used, but any line of config in old format will disable server-side check of the mod.
+
 Adds JEI dragging support for more mods, that haven't been supported by [JustEnoughDrags](https://github.com/warmthdawn/justenoughdrags).  
 It have buildin support for BuildCraft Pipes and Gates for now,
 But allows modpack maker to add custom slots on custom GUIs without the need to write codes.  
