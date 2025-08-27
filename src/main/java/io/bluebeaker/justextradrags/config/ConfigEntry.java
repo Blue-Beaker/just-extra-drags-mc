@@ -35,6 +35,10 @@ public class ConfigEntry {
     @Nullable
     public static ConfigEntry getFromConfigLine(String configLine){
         try {
+            // Allow comments in config line
+            configLine=configLine.split("#")[0];
+            if(configLine.isEmpty()) return null;
+
             String[] splitted=configLine.split(":");
             if(splitted.length<3) return null;
             Class clazzGui = null;
