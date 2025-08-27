@@ -3,22 +3,22 @@ package io.bluebeaker.justextradrags;
 import io.bluebeaker.justextradrags.compat.BCCompat;
 import io.bluebeaker.justextradrags.config.JXDConfigManager;
 import io.bluebeaker.justextradrags.network.NetworkHandler;
-import net.minecraftforge.fml.common.network.NetworkCheckHandler;
-import net.minecraftforge.fml.common.versioning.ComparableVersion;
-import net.minecraftforge.fml.relauncher.Side;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Config.Type;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkCheckHandler;
+import net.minecraftforge.fml.common.versioning.ComparableVersion;
+import net.minecraftforge.fml.relauncher.Side;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
@@ -54,10 +54,12 @@ public class JustExtraDrags
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        NetworkHandler.registerMessages(MODID);
+    }
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event){
         BCCompat.addBuildcraftCompat();
         JXDConfigManager.updateEntriesFromConfig();
-
-        NetworkHandler.registerMessages(MODID);
     }
 
     @SubscribeEvent
