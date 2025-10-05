@@ -51,15 +51,15 @@ public class ConfigEntry {
             if(FMLCommonHandler.instance().getSide()== Side.CLIENT){
                 try {
                     clazzGui = Class.forName(splitted[0]);
-                } catch (ClassNotFoundException e) {
-                    JustExtraDrags.getLogger().error("Container GUI class '{}' not found",splitted[0]);
+                } catch (Throwable e) {
+                    JustExtraDrags.getLogger().error("Container GUI class '{}' not found: ",splitted[0],e);
                 }
             }
             Class param1;
             try {
                 param1 = Class.forName(splitted[1]);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException("Container class '"+splitted[1]+"' not found");
+            } catch (Throwable e) {
+                throw new RuntimeException("Container class '"+splitted[1]+"' not found: ",e);
             }
 
             if(!Container.class.isAssignableFrom(param1)){
@@ -78,8 +78,8 @@ public class ConfigEntry {
                 Class param2;
                 try {
                     param2 = Class.forName(splitted[2]);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException("Slot class '"+splitted[2]+"' not found");
+                } catch (Throwable e) {
+                    throw new RuntimeException("Slot class '"+splitted[2]+"' not found: ",e);
                 }
 
                 if(!Slot.class.isAssignableFrom(param2)){
