@@ -52,14 +52,14 @@ public class ConfigEntry {
                 try {
                     clazzGui = Class.forName(splitted[0]);
                 } catch (Throwable e) {
-                    JustExtraDrags.getLogger().error("Container GUI class '{}' not found: ",splitted[0],e);
+                    JustExtraDrags.getLogger().error("Container GUI class '{}' failed to load: ",splitted[0],e);
                 }
             }
             Class param1;
             try {
                 param1 = Class.forName(splitted[1]);
             } catch (Throwable e) {
-                throw new RuntimeException("Container class '"+splitted[1]+"' not found: ",e);
+                throw new RuntimeException("Container class '"+splitted[1]+"' failed to load: ",e);
             }
 
             if(!Container.class.isAssignableFrom(param1)){
@@ -79,7 +79,7 @@ public class ConfigEntry {
                 try {
                     param2 = Class.forName(splitted[2]);
                 } catch (Throwable e) {
-                    throw new RuntimeException("Slot class '"+splitted[2]+"' not found: ",e);
+                    throw new RuntimeException("Slot class '"+splitted[2]+"' failed to load: ",e);
                 }
 
                 if(!Slot.class.isAssignableFrom(param2)){
