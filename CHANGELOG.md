@@ -8,3 +8,5 @@ Reworked network handler to prevent potential cheating on servers. The container
 Reworked ghost item handler, to make multiple config work on a same container GUI (such as different slot classes)  
 Added support for BC Gate statements  
 Allowed comments in config  
+## 1.1.1
+Handle all Throwable when loading config, preventing crash on startup  
